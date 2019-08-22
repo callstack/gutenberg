@@ -32,7 +32,7 @@ export class MediaUpload extends React.Component {
 		this.onPickerSelect = this.onPickerSelect.bind( this );
 	}
 	getTakeMediaLabel() {
-		const { allowedTypes } = this.props;
+		const { allowedTypes = [] } = this.props;
 		const mediaType = allowedTypes[ 0 ];
 
 		if ( mediaType === MEDIA_TYPE_IMAGE ) {
@@ -51,7 +51,7 @@ export class MediaUpload extends React.Component {
 	}
 
 	getChooseFromDeviceIcon() {
-		const { allowedTypes } = this.props;
+		const { allowedTypes = [] } = this.props;
 		const mediaType = allowedTypes[ 0 ];
 
 		if ( mediaType === MEDIA_TYPE_IMAGE ) {
@@ -76,7 +76,7 @@ export class MediaUpload extends React.Component {
 	}
 
 	onPickerSelect( requestFunction ) {
-		const { allowedTypes, onSelect } = this.props;
+		const { allowedTypes = [], onSelect } = this.props;
 		requestFunction( allowedTypes, ( mediaId, mediaUrl ) => {
 			if ( mediaId ) {
 				onSelect( { mediaId, mediaUrl } );
