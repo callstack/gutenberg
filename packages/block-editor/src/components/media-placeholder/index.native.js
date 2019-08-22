@@ -16,7 +16,7 @@ import { Dashicon } from '@wordpress/components';
 import styles from './styles.scss';
 
 function MediaPlaceholder( props ) {
-	const { allowedTypes, labels = {}, icon, onSelect, multiple, isAppender } = props;
+	const { allowedTypes = [], labels = {}, icon, onSelect, multiple, isAppender } = props;
 
 	const isImage = MEDIA_TYPE_IMAGE === allowedTypes[ 0 ];
 	const isVideo = MEDIA_TYPE_VIDEO === allowedTypes[ 0 ];
