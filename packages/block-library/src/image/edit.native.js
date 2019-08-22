@@ -175,7 +175,7 @@ class ImageEdit extends React.Component {
 		} );
 	}
 
-	onSelectMediaUploadOption( mediaId, mediaUrl ) {
+	onSelectMediaUploadOption( { mediaId, mediaUrl } ) {
 		const { setAttributes } = this.props;
 		setAttributes( { url: mediaUrl, id: mediaId } );
 	}
@@ -260,8 +260,8 @@ class ImageEdit extends React.Component {
 			return (
 				<View style={ { flex: 1 } } >
 					<MediaPlaceholder
-						mediaType={ MEDIA_TYPE_IMAGE }
-						onSelectURL={ this.onSelectMediaUploadOption }
+						allowedTypes={ [ MEDIA_TYPE_IMAGE ] }
+						onSelect={ this.onSelectMediaUploadOption }
 						icon={ this.getIcon( false ) }
 						onFocus={ this.props.onFocus }
 					/>
@@ -358,8 +358,8 @@ class ImageEdit extends React.Component {
 		);
 
 		return (
-			<MediaUpload mediaType={ MEDIA_TYPE_IMAGE }
-				onSelectURL={ this.onSelectMediaUploadOption }
+			<MediaUpload allowedTypes={ [ MEDIA_TYPE_IMAGE ] }
+				onSelect={ this.onSelectMediaUploadOption }
 				render={ ( { open, getMediaOptions } ) => {
 					return getImageComponent( open, getMediaOptions );
 				} }
