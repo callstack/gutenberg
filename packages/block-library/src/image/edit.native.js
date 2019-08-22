@@ -258,14 +258,12 @@ class ImageEdit extends React.Component {
 
 		if ( ! url ) {
 			return (
-				<View style={ { flex: 1 } } >
-					<MediaPlaceholder
-						allowedTypes={ [ MEDIA_TYPE_IMAGE ] }
-						onSelect={ this.onSelectMediaUploadOption }
-						icon={ this.getIcon( false ) }
-						onFocus={ this.props.onFocus }
-					/>
-				</View>
+				<MediaPlaceholder
+					allowedTypes={ [ MEDIA_TYPE_IMAGE ] }
+					onSelect={ this.onSelectMediaUploadOption }
+					icon={ this.getIcon( false ) }
+					onFocus={ this.props.onFocus }
+				/>
 			);
 		}
 

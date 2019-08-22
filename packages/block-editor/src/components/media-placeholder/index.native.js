@@ -48,46 +48,49 @@ function MediaPlaceholder( props ) {
 	}
 
 	return (
-		<MediaUpload
-			allowedTypes={ allowedTypes }
-			onSelect={ onSelect }
-			multiple={ multiple }
-			render={ ( { open, getMediaOptions } ) => {
-				return (
-					<TouchableWithoutFeedback
-						accessibilityLabel={ sprintf(
+		<View style={ styles.mainContainer }>
+			<MediaUpload
+				allowedTypes={ allowedTypes }
+				onSelect={ onSelect }
+				multiple={ multiple }
+				render={ ( { open, getMediaOptions } ) => {
+					return (
+						<TouchableWithoutFeedback
+							accessibilityLabel={ sprintf(
 							/* translators: accessibility text for the media block empty state. %s: media type */
-							__( '%s block. Empty' ),
-							placeholderTitle
-						) }
-						accessibilityRole={ 'button' }
-						accessibilityHint={ accessibilityHint }
-						onPress={ ( event ) => {
-							props.onFocus( event );
-							open();
-						} }
-					>
+								__( '%s block. Empty' ),
+								placeholderTitle
+							) }
+							accessibilityRole={ 'button' }
+							accessibilityHint={ accessibilityHint }
+							onPress={ ( event ) => {
+								props.onFocus( event );
+								open();
+							} }
+						>
 
-						<View style={ [ styles.emptyStateContainer, isAppender && styles.isAppender ] }>
-							{ getMediaOptions() }
-							{ isAppender ?
-								<Dashicon icon="plus-alt" style={ styles.addBlockButton } color={ styles.addBlockButton.color } size={ styles.addBlockButton.size } /> :
-								<>
-									<View style={ styles.modalIcon }>
-										{ icon }
-									</View>
-									<Text style={ styles.emptyStateTitle }>
-										{ placeholderTitle }
-									</Text>
-									<Text style={ styles.emptyStateDescription }>
-										{ instructions }
-									</Text>
-								</>
-							}
-						</View>
-					</TouchableWithoutFeedback>
-				);
-			} } />
+							<View style={ [ styles.emptyStateContainer, isAppender && styles.isAppender ] }>
+								{ getMediaOptions() }
+								{ isAppender ?
+									<Dashicon icon="plus-alt" style={ styles.addBlockButton } color={ styles.addBlockButton.color } size={ styles.addBlockButton.size } /> :
+									<>
+										<View style={ styles.modalIcon }>
+											{ icon }
+										</View>
+										<Text style={ styles.emptyStateTitle }>
+											{ placeholderTitle }
+										</Text>
+										<Text style={ styles.emptyStateDescription }>
+											{ instructions }
+										</Text>
+									</>
+								}
+							</View>
+						</TouchableWithoutFeedback>
+					);
+				} } />
+		</View>
+
 	);
 }
 

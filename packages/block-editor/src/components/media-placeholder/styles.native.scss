@@ -1,3 +1,7 @@
+.mainContainer {
+	flex: 1;
+}
+
 .emptyStateContainer {
 	flex: 1;
 	height: 142;
@@ -36,7 +40,7 @@
 
 .isAppender {
 	height: auto;
-	background-color: transparent;
+	background-color: $white;
 	border: $border-width solid $light-gray-500;
 	border-radius: 4px;
 }
