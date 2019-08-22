@@ -85,7 +85,7 @@ If false the default placeholder style is used.
 - Type: `Boolean`
 - Required: No
 - Default: `false`
-- Platform: Web
+- Platform: Web | Mobile
 
 ### labels
 
@@ -120,6 +120,14 @@ The call back receives an array with the new files. Each element of the collecti
 - Type: `Function`
 - Required: Yes
 - Platform: Web | Mobile
+
+### onFocus
+
+Callback called when placeholder is touched.
+
+- Type: `Function`
+- Required: Yes
+- Platform: Mobile
 
 ### value
 

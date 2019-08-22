@@ -8,6 +8,7 @@ import { View, Text, TouchableWithoutFeedback } from 'react-native';
  */
 import { __, sprintf } from '@wordpress/i18n';
 import { MediaUpload, MEDIA_TYPE_IMAGE, MEDIA_TYPE_VIDEO } from '@wordpress/block-editor';
+import { Dashicon } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -15,7 +16,7 @@ import { MediaUpload, MEDIA_TYPE_IMAGE, MEDIA_TYPE_VIDEO } from '@wordpress/bloc
 import styles from './styles.scss';
 
 function MediaPlaceholder( props ) {
-	const { allowedTypes, labels = {}, icon, onSelect } = props;
+	const { allowedTypes, labels = {}, icon, onSelect, multiple, isAppender } = props;
 
 	const isImage = MEDIA_TYPE_IMAGE === allowedTypes[ 0 ];
 	const isVideo = MEDIA_TYPE_VIDEO === allowedTypes[ 0 ];
@@ -50,6 +51,7 @@ function MediaPlaceholder( props ) {
 		<MediaUpload
 			allowedTypes={ allowedTypes }
 			onSelect={ onSelect }
+			multiple={ multiple }
 			render={ ( { open, getMediaOptions } ) => {
 				return (
 					<TouchableWithoutFeedback
@@ -65,17 +67,23 @@ function MediaPlaceholder( props ) {
 							open();
 						} }
 					>
-						<View style={ styles.emptyStateContainer }>
+
+						<View style={ [ styles.emptyStateContainer, isAppender && styles.isAppender ] }>
 							{ getMediaOptions() }
-							<View style={ styles.modalIcon }>
-								{ icon }
-							</View>
-							<Text style={ styles.emptyStateTitle }>
-								{ placeholderTitle }
-							</Text>
-							<Text style={ styles.emptyStateDescription }>
-								{ instructions }
-							</Text>
+							{ isAppender ?
+								<Dashicon icon="plus-alt" style={ styles.addBlockButton } color={ styles.addBlockButton.color } size={ styles.addBlockButton.size } /> :
+								<>
+									<View style={ styles.modalIcon }>
+										{ icon }
+									</View>
+									<Text style={ styles.emptyStateTitle }>
+										{ placeholderTitle }
+									</Text>
+									<Text style={ styles.emptyStateDescription }>
+										{ instructions }
+									</Text>
+								</>
+							}
 						</View>
 					</TouchableWithoutFeedback>
 				);

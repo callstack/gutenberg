@@ -276,6 +276,7 @@ class GalleryEdit extends Component {
 				value={ hasImagesWithId ? images : undefined }
 				onError={ this.onUploadError }
 				notices={ hasImages ? undefined : noticeUI }
+				onFocus={ this.props.onFocus }
 			/>
 		);
 
