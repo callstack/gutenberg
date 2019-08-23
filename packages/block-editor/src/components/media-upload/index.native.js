@@ -77,9 +77,9 @@ export class MediaUpload extends React.Component {
 
 	onPickerSelect( requestFunction ) {
 		const { allowedTypes = [], onSelect } = this.props;
-		requestFunction( allowedTypes, ( mediaId, mediaUrl ) => {
-			if ( mediaId ) {
-				onSelect( { mediaId, mediaUrl } );
+		requestFunction( allowedTypes, ( id, url ) => {
+			if ( id ) {
+				onSelect( { id, url } );
 			}
 		} );
 	}
