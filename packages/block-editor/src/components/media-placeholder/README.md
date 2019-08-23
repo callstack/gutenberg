@@ -123,7 +123,7 @@ The call back receives an array with the new files. Each element of the collecti
 
 The argument of the callback is an object containing the following properties:
 - Web: `{ url, alt, id, link, caption, sizes, media_details }`
-- Mobile: `{ mediaId, mediaUrl }`
+- Mobile: `{ id, url }`
 
 ### onFocus
 
