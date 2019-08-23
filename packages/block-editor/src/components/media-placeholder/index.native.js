@@ -17,8 +17,8 @@ import styles from './styles.scss';
 function MediaPlaceholder( props ) {
 	const { allowedTypes = [], labels = {}, icon, onSelect } = props;
 
-	const isImage = MEDIA_TYPE_IMAGE === allowedTypes[ 0 ];
-	const isVideo = MEDIA_TYPE_VIDEO === allowedTypes[ 0 ];
+	const isImage = allowedTypes.includes( MEDIA_TYPE_IMAGE );
+	const isVideo = allowedTypes.includes( MEDIA_TYPE_VIDEO );
 
 	let placeholderTitle = labels.title;
 	if ( placeholderTitle === undefined ) {

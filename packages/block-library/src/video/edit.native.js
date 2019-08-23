@@ -181,7 +181,7 @@ class VideoEdit extends React.Component {
 			return (
 				<View style={ { flex: 1 } } >
 					<MediaPlaceholder
-						mediaType={ MEDIA_TYPE_VIDEO }
+						allowedTypes={ [ MEDIA_TYPE_VIDEO ] }
 						onSelect={ this.onSelectMediaUploadOption }
 						icon={ this.getIcon( false, true ) }
 						onFocus={ this.props.onFocus }
