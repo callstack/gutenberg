@@ -121,6 +121,10 @@ The call back receives an array with the new files. Each element of the collecti
 - Required: Yes
 - Platform: Web | Mobile
 
+The argument of the callback is an object containing the following properties:
+- Web: `{ url, alt, id, link, caption, sizes, media_details }`
+- Mobile: `{ mediaId, mediaUrl }`
+
 ### onFocus
 
 Callback called when placeholder is touched.
