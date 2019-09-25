@@ -20,6 +20,7 @@ import { KeyboardAwareFlatList, ReadableContentView, withTheme } from '@wordpres
 import styles from './style.scss';
 import BlockListBlock from './block';
 import BlockListAppender from '../block-list-appender';
+import FloatingToolbar from './block-mobile-floating-toolbar';
 
 const innerToolbarHeight = 44;
 
@@ -69,13 +70,14 @@ export class BlockList extends Component {
 	}
 
 	render() {
-		const { clearSelectedBlock, blockClientIds, isFullyBordered, title, header, withFooter = true, renderAppender } = this.props;
+		const { clearSelectedBlock, blockClientIds, isFullyBordered, title, header, withFooter = true, renderAppender,selectedBlockClientId } = this.props;
 
 		return (
 			<View
 				style={ { flex: 1 } }
 				onAccessibilityEscape={ clearSelectedBlock }
 			>
+				{selectedBlockClientId === blockClientIds[0] && <FloatingToolbar.Slot />}
 				<KeyboardAwareFlatList
 					{ ...( Platform.OS === 'android' ? { removeClippedSubviews: false } : {} ) } // Disable clipping on Android to fix focus losing. See https://github.com/wordpress-mobile/gutenberg-mobile/pull/741#issuecomment-472746541
 					accessibilityLabel="block-list"
@@ -127,6 +129,7 @@ export class BlockList extends Component {
 						onCaretVerticalPositionChange={ this.onCaretVerticalPositionChange }
 						borderStyle={ this.blockHolderBorderStyle() }
 						focusedBorderColor={ blockHolderFocusedStyle.borderColor }
+						index={index}
 					/> ) }
 			</ReadableContentView>
 		);
