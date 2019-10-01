@@ -22,14 +22,14 @@ import {
 	ToolbarButton,
 	withTheme,
 } from '@wordpress/components';
-
+import { withPreferredColorScheme } from '@wordpress/compose';
 import {
 	Caption,
 	MediaPlaceholder,
 	MediaUpload,
+	MediaUploadProgress,
 	MEDIA_TYPE_VIDEO,
 	BlockControls,
-	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { isURL } from '@wordpress/url';
@@ -38,7 +38,6 @@ import { doAction, hasAction } from '@wordpress/hooks';
 /**
  * Internal dependencies
  */
-import MediaUploadProgress from '../image/media-upload-progress';
 import style from './style.scss';
 import SvgIcon from './icon';
 import SvgIconRetry from './icon-retry';
@@ -51,7 +50,6 @@ class VideoEdit extends React.Component {
 
 		this.state = {
 			isCaptionSelected: false,
-			showSettings: false,
 			videoContainerHeight: 0,
 		};
 
@@ -153,7 +151,7 @@ class VideoEdit extends React.Component {
 			return <Icon icon={ SvgIconRetry } { ...style.icon } />;
 		}
 
-		const iconStyle = this.props.useStyle( style.icon, style.iconDark );
+		const iconStyle = this.props.getStylesFromColorScheme( style.icon, style.iconDark );
 		return <Icon icon={ SvgIcon } { ...( ! isMediaPlaceholder ? style.iconUploading : iconStyle ) } />;
 	}
 
@@ -200,13 +198,6 @@ class VideoEdit extends React.Component {
 						<BlockControls>
 							{ toolbarEditButton }
 						</BlockControls> }
-					<InspectorControls>
-						{ false && <ToolbarButton //Not rendering settings button until it has an action
-							label={ __( 'Video Settings' ) }
-							icon="admin-generic"
-							onClick={ () => ( null ) }
-						/> }
-					</InspectorControls>
 					<MediaUploadProgress
 						mediaId={ id }
 						onFinishMediaUploadWithSuccess={ this.finishMediaUploadWithSuccess }
@@ -265,4 +256,4 @@ class VideoEdit extends React.Component {
 	}
 }
 
-export default withTheme( VideoEdit );
+export default withPreferredColorScheme( VideoEdit );

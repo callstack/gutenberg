@@ -19,13 +19,14 @@ import {
 	Icon,
 	Toolbar,
 	ToolbarButton,
-	withTheme,
+	PanelBody,
 } from '@wordpress/components';
 
 import {
 	Caption,
 	MediaPlaceholder,
 	MediaUpload,
+	MediaUploadProgress,
 	MEDIA_TYPE_IMAGE,
 	BlockControls,
 	InspectorControls,
@@ -33,12 +34,12 @@ import {
 import { __, sprintf } from '@wordpress/i18n';
 import { isURL } from '@wordpress/url';
 import { doAction, hasAction } from '@wordpress/hooks';
+import { withPreferredColorScheme } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
 import styles from './styles.scss';
-import MediaUploadProgress from './media-upload-progress';
 import SvgIcon from './icon';
 import SvgIconRetry from './icon-retry';
 
@@ -53,7 +54,6 @@ class ImageEdit extends React.Component {
 		super( props );
 
 		this.state = {
-			showSettings: false,
 			isCaptionSelected: false,
 		};
 
@@ -198,21 +198,13 @@ class ImageEdit extends React.Component {
 			return <Icon icon={ SvgIconRetry } { ...styles.iconRetry } />;
 		}
 
-		const iconStyle = this.props.useStyle( styles.icon, styles.iconDark );
+		const iconStyle = this.props.getStylesFromColorScheme( styles.icon, styles.iconDark );
 		return <Icon icon={ SvgIcon } { ...iconStyle } />;
 	}
 
 	render() {
 		const { attributes, isSelected } = this.props;
 		const { url, height, width, alt, href, id } = attributes;
-
-		const onImageSettingsButtonPressed = () => {
-			this.setState( { showSettings: true } );
-		};
-
-		const onImageSettingsClose = () => {
-			this.setState( { showSettings: false } );
-		};
 
 		const getToolbarEditButton = ( open ) => (
 			<BlockControls>
@@ -227,36 +219,34 @@ class ImageEdit extends React.Component {
 		);
 
 		const getInspectorControls = () => (
-			<BottomSheet
-				isVisible={ this.state.showSettings }
-				onClose={ onImageSettingsClose }
-				hideHeader
-			>
-				<BottomSheet.Cell
-					icon={ 'admin-links' }
-					label={ __( 'Link To' ) }
-					value={ href || '' }
-					valuePlaceholder={ __( 'Add URL' ) }
-					onChangeValue={ this.onSetLinkDestination }
-					autoCapitalize="none"
-					autoCorrect={ false }
-					keyboardType="url"
-				/>
-				<BottomSheet.Cell
-					icon={ 'editor-textcolor' }
-					label={ __( 'Alt Text' ) }
-					value={ alt || '' }
-					valuePlaceholder={ __( 'None' ) }
-					separatorType={ 'fullWidth' }
-					onChangeValue={ this.updateAlt }
-				/>
-				<BottomSheet.Cell
-					label={ __( 'Clear All Settings' ) }
-					labelStyle={ styles.clearSettingsButton }
-					separatorType={ 'none' }
-					onPress={ this.onClearSettings }
-				/>
-			</BottomSheet>
+			<InspectorControls>
+				<PanelBody title={ __( 'Image Settings' ) } >
+					<BottomSheet.Cell
+						icon={ 'admin-links' }
+						label={ __( 'Link To' ) }
+						value={ href || '' }
+						valuePlaceholder={ __( 'Add URL' ) }
+						onChangeValue={ this.onSetLinkDestination }
+						autoCapitalize="none"
+						autoCorrect={ false }
+						keyboardType="url"
+					/>
+					<BottomSheet.Cell
+						icon={ 'editor-textcolor' }
+						label={ __( 'Alt Text' ) }
+						value={ alt || '' }
+						valuePlaceholder={ __( 'None' ) }
+						separatorType={ 'fullWidth' }
+						onChangeValue={ this.updateAlt }
+					/>
+					<BottomSheet.Cell
+						label={ __( 'Clear All Settings' ) }
+						labelStyle={ styles.clearSettingsButton }
+						separatorType={ 'none' }
+						onPress={ this.onClearSettings }
+					/>
+				</PanelBody>
+			</InspectorControls>
 		);
 
 		if ( ! url ) {
@@ -286,13 +276,6 @@ class ImageEdit extends React.Component {
 					{ ( ! this.state.isCaptionSelected ) &&
 						getToolbarEditButton( openMediaOptions )
 					}
-					<InspectorControls>
-						<ToolbarButton
-							title={ __( 'Image Settings' ) }
-							icon="admin-generic"
-							onClick={ onImageSettingsButtonPressed }
-						/>
-					</InspectorControls>
 					<MediaUploadProgress
 						height={ height }
 						width={ width }
@@ -371,4 +354,4 @@ class ImageEdit extends React.Component {
 	}
 }
 
-export default withTheme( ImageEdit );
+export default withPreferredColorScheme( ImageEdit );

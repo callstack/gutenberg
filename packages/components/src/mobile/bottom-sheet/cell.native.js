@@ -10,6 +10,7 @@ import { isEmpty } from 'lodash';
 import { Dashicon } from '@wordpress/components';
 import { Component } from '@wordpress/element';
 import { __, _x, sprintf } from '@wordpress/i18n';
+import { withPreferredColorScheme } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -49,14 +50,14 @@ class BottomSheetCell extends Component {
 			editable = true,
 			separatorType,
 			style = {},
-			useStyle,
+			getStylesFromColorScheme,
 			...valueProps
 		} = this.props;
 
 		const showValue = value !== undefined;
 		const isValueEditable = editable && onChangeValue !== undefined;
-		const cellLabelStyle = useStyle( styles.cellLabel, styles.cellTextDark );
-		const cellLabelCenteredStyle = useStyle( styles.cellLabelCentered, styles.cellTextDark );
+		const cellLabelStyle = getStylesFromColorScheme( styles.cellLabel, styles.cellTextDark );
+		const cellLabelCenteredStyle = getStylesFromColorScheme( styles.cellLabelCentered, styles.cellTextDark );
 		const defaultLabelStyle = showValue || icon !== undefined ? cellLabelStyle : cellLabelCenteredStyle;
 		const drawSeparator = ( separatorType && separatorType !== 'none' ) || separatorStyle === undefined;
 
@@ -80,8 +81,8 @@ class BottomSheetCell extends Component {
 
 		const separatorStyle = () => {
 			//eslint-disable-next-line @wordpress/no-unused-vars-before-return
-			const defaultSeparatorStyle = this.props.useStyle( styles.separator, styles.separatorDark );
-			const cellSeparatorStyle = this.props.useStyle( styles.cellSeparator, styles.cellSeparatorDark );
+			const defaultSeparatorStyle = this.props.getStylesFromColorScheme( styles.separator, styles.separatorDark );
+			const cellSeparatorStyle = this.props.getStylesFromColorScheme( styles.cellSeparator, styles.cellSeparatorDark );
 			const leftMarginStyle = { ...cellSeparatorStyle, ...platformStyles.separatorMarginLeft };
 			switch ( separatorType ) {
 				case 'leftMargin':
@@ -97,7 +98,7 @@ class BottomSheetCell extends Component {
 
 		const getValueComponent = () => {
 			const styleRTL = I18nManager.isRTL && styles.cellValueRTL;
-			const cellValueStyle = this.props.useStyle( styles.cellValue, styles.cellTextDark );
+			const cellValueStyle = this.props.getStylesFromColorScheme( styles.cellValue, styles.cellTextDark );
 			const finalStyle = { ...cellValueStyle, ...valueStyle, ...styleRTL };
 
 			// To be able to show the `middle` ellipsizeMode on editable cells
@@ -150,7 +151,7 @@ class BottomSheetCell extends Component {
 				);
 		};
 
-		const iconStyle = useStyle( styles.icon, styles.iconDark );
+		const iconStyle = getStylesFromColorScheme( styles.icon, styles.iconDark );
 
 		return (
 			<TouchableOpacity
@@ -188,4 +189,4 @@ class BottomSheetCell extends Component {
 	}
 }
 
-export default withTheme( BottomSheetCell );
+export default withPreferredColorScheme( BottomSheetCell );

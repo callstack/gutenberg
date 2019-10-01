@@ -7,7 +7,7 @@ import { ScrollView, View } from 'react-native';
 /**
  * WordPress dependencies
  */
-import { compose } from '@wordpress/compose';
+import { compose, withPreferredColorScheme } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { withViewportMatch } from '@wordpress/viewport';
 import { __ } from '@wordpress/i18n';
@@ -30,7 +30,7 @@ function HeaderToolbar( {
 	undo,
 	showInserter,
 	showKeyboardHideButton,
-	useStyle,
+	getStylesFromColorScheme,
 	onHideKeyboard,
 } ) {
 	const scrollViewRef = useRef( null );
@@ -39,7 +39,7 @@ function HeaderToolbar( {
 	};
 
 	return (
-		<View style={ useStyle( styles.container, styles.containerDark ) }>
+		<View style={ getStylesFromColorScheme( styles.container, styles.containerDark ) }>
 			<ScrollView
 				ref={ scrollViewRef }
 				onContentSizeChange={ scrollToStart }
@@ -108,5 +108,5 @@ export default compose( [
 		};
 	} ),
 	withViewportMatch( { isLargeViewport: 'medium' } ),
-	withTheme,
+	withPreferredColorScheme,
 ] )( HeaderToolbar );

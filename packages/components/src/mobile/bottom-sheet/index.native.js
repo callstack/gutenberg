@@ -9,6 +9,7 @@ import SafeArea from 'react-native-safe-area';
  * WordPress dependencies
  */
 import { Component } from '@wordpress/element';
+import { withPreferredColorScheme } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -64,7 +65,7 @@ class BottomSheet extends Component {
 			hideHeader,
 			style = {},
 			contentStyle = {},
-			useStyle,
+			getStylesFromColorScheme,
 		} = this.props;
 
 		const panResponder = PanResponder.create( {
@@ -120,7 +121,7 @@ class BottomSheet extends Component {
 			},
 		};
 
-		const backgroundStyle = useStyle( styles.background, styles.backgroundDark );
+		const backgroundStyle = getStylesFromColorScheme( styles.background, styles.backgroundDark );
 
 		return (
 			<Modal
@@ -164,7 +165,7 @@ function getWidth() {
 	return Math.min( Dimensions.get( 'window' ).width, styles.background.maxWidth );
 }
 
-const ThemedBottomSheet = withTheme( BottomSheet );
+const ThemedBottomSheet = withPreferredColorScheme( BottomSheet );
 
 ThemedBottomSheet.getWidth = getWidth;
 ThemedBottomSheet.Button = Button;
