@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { Slider as RNSlider, TextInput, View } from 'react-native';
+import { Slider as RNSlider, View } from 'react-native';
 
 /**
  * WordPress dependencies
@@ -11,35 +11,32 @@ import { Component } from '@wordpress/element';
 /**
  * Internal dependencies
  */
+import NumericInput from '../numeric-input';
 import styles from './styles.scss';
 
 class Slider extends Component {
 	constructor( props ) {
 		super( props );
-		this.handleToggleFocus = this.handleToggleFocus.bind( this );
+		this.onFocus = this.onFocus.bind( this );
 		this.handleChange = this.handleChange.bind( this );
 		this.handleReset = this.handleReset.bind( this );
 
-		const initialValue = this.validateInput( props.value || props.defaultValue || props.minimumValue );
+		const initialValue = this.validateInput( props.value || props.minimumValue );
 
-		this.state = { hasFocus: false, initialValue, sliderValue: initialValue };
+		this.state = { initialValue, sliderValue: initialValue };
 	}
 
-	componentDidUpdate( ) {
-		const reset = this.props.value === null;
-		if ( reset ) {
-			this.handleReset();
+	componentDidUpdate( prevState ) {
+		const change = this.props.value !== prevState.value;
+		if ( change ) {
+			this.handleChange(this.props.value);
 		}
 	}
 
-	handleToggleFocus( validateInput = true ) {
-		const newState = { hasFocus: ! this.state.hasFocus };
-
+	onFocus( validateInput = true ) {
 		if ( validateInput ) {
-			newState.sliderValue = this.validateInput( this.state.sliderValue );
+			this.setState( { sliderValue: this.validateInput( this.state.sliderValue )} );
 		}
-
-		this.setState( newState );
 	}
 
 	validateInput( text ) {
@@ -54,8 +51,8 @@ class Slider extends Component {
 	}
 
 	handleChange( text ) {
-		if ( ! isNaN( Number( text ) ) ) {
-			if ( this.props.onChangeValue ) {
+		if ( ! isNaN( Number( text ) ) || text === '' ) {
+			if ( this.props.onChangeValue && text !== '' ) {
 				this.props.onChangeValue( text );
 			}
 			this.setState( { sliderValue: text } );
@@ -63,11 +60,12 @@ class Slider extends Component {
 	}
 
 	handleReset() {
-		this.handleChange( this.props.defaultValue || this.state.initialValue );
+		this.handleChange( this.state.initialValue );
 	}
 
 	render() {
 		const {
+			value,
 			minimumValue,
 			maximumValue,
 			disabled,
@@ -93,13 +91,13 @@ class Slider extends Component {
 					thumbTintColor={ thumbTintColor }
 					onValueChange={ this.handleChange }
 				/>
-				<TextInput
-					style={ [ styles.sliderTextInput, hasFocus ? styles.isSelected : {} ] }
-					onChangeText={ this.handleChange }
-					onFocus={ this.handleToggleFocus }
-					onBlur={ this.handleToggleFocus }
+				<NumericInput
+					// style={ styles.sliderTextInput }
+					onValueChange={ this.handleChange }
+					onFocus={ this.onFocus }
+					onBlur={ this.onFocus }
 					keyboardType="numeric"
-					value={ `${ sliderValue }` }
+					value={ sliderValue }
 				/>
 			</View>
 		);

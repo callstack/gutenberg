@@ -21,6 +21,7 @@ import {
 	Toolbar,
 	ToolbarButton,
 	PanelBody,
+	BottomSheet,
 } from '@wordpress/components';
 
 import {
@@ -67,6 +68,7 @@ export class ImageEdit extends React.Component {
 		this.onSelectMediaUploadOption = this.onSelectMediaUploadOption.bind( this );
 		this.updateMediaProgress = this.updateMediaProgress.bind( this );
 		this.updateAlt = this.updateAlt.bind( this );
+		this.updateSlider = this.updateSlider.bind( this );
 		this.updateImageURL = this.updateImageURL.bind( this );
 		this.onSetLinkDestination = this.onSetLinkDestination.bind( this );
 		this.onSetNewTab = this.onSetNewTab.bind( this );
@@ -163,6 +165,10 @@ export class ImageEdit extends React.Component {
 		this.props.setAttributes( { alt: newAlt } );
 	}
 
+	updateSlider( newVal ) {
+		this.props.setAttributes( { sliderVal: newVal } );
+	}
+
 	updateImageURL( url ) {
 		this.props.setAttributes( { url, width: undefined, height: undefined } );
 	}
@@ -186,6 +192,7 @@ export class ImageEdit extends React.Component {
 			href: undefined,
 			linkTarget: undefined,
 			rel: undefined,
+			sliderVal: undefined
 		} );
 	}
 
@@ -216,7 +223,7 @@ export class ImageEdit extends React.Component {
 
 	render() {
 		const { attributes, isSelected } = this.props;
-		const { url, height, width, alt, href, id, linkTarget } = attributes;
+		const { url, height, width, alt, href, id, sliderVal, linkTarget } = attributes;
 
 		const getToolbarEditButton = ( open ) => (
 			<BlockControls>
@@ -248,6 +255,15 @@ export class ImageEdit extends React.Component {
 						label={ __( 'Open in new tab' ) }
 						checked={ linkTarget === '_blank' }
 						onChange={ this.onSetNewTab }
+					/>
+					<BottomSheet.RangeCell
+						icon={ 'admin-settings' }
+						label={ __( 'Slider' ) }
+						value={ sliderVal || 45 }
+						minimumValue={ 20 }
+						maximumValue={ 100 }
+						separatorType={ 'fullWidth' }
+						onChangeValue={ this.updateSlider }
 					/>
 					<TextControl
 						icon={ 'editor-textcolor' }
