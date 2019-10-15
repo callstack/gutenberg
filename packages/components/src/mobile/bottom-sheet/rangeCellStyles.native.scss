@@ -1,0 +1,13 @@
+.container {
+	flex-direction: row;
+	min-height: 48;
+}
+
+.cellContainerStyles {
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.cellRowStyles {
+	min-height: 48;
+}

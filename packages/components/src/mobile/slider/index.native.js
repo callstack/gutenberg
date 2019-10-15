@@ -12,6 +12,7 @@ import { Component } from '@wordpress/element';
  * Internal dependencies
  */
 import styles from './styles.scss';
+import borderStyles from './borderStyles.scss';
 
 class Slider extends Component {
 	constructor( props ) {
@@ -94,7 +95,11 @@ class Slider extends Component {
 					onValueChange={ this.handleChange }
 				/>
 				<TextInput
-					style={ [ styles.sliderTextInput, hasFocus ? styles.isSelected : {} ] }
+					style={ [
+						styles.sliderTextInput,
+						borderStyles.borderStyle,
+						hasFocus && borderStyles.isSelected,
+					] }
 					onChangeText={ this.handleChange }
 					onFocus={ this.handleToggleFocus }
 					onBlur={ this.handleToggleFocus }

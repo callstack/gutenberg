@@ -44,6 +44,8 @@ class BottomSheetCell extends Component {
 			icon,
 			labelStyle = {},
 			valueStyle = {},
+			cellContainerStyle = {},
+			cellRowContainerStyle = {},
 			onChangeValue,
 			children,
 			editable = true,
@@ -59,6 +61,8 @@ class BottomSheetCell extends Component {
 		const cellLabelCenteredStyle = getStylesFromColorScheme( styles.cellLabelCentered, styles.cellTextDark );
 		const defaultLabelStyle = showValue || icon !== undefined ? cellLabelStyle : cellLabelCenteredStyle;
 		const drawSeparator = ( separatorType && separatorType !== 'none' ) || separatorStyle === undefined;
+		const cellContainerStyles = { ...styles.cellContainer, ...cellContainerStyle };
+		const rowContainerStyles = { ...styles.cellRowContainer, ...cellRowContainerStyle };
 
 		const onCellPress = () => {
 			if ( isValueEditable ) {
@@ -165,8 +169,8 @@ class BottomSheetCell extends Component {
 				onPress={ onCellPress }
 				style={ { ...styles.clipToBounds, ...style } }
 			>
-				<View style={ styles.cellContainer }>
-					<View style={ styles.cellRowContainer }>
+				<View style={ cellContainerStyles }>
+					<View style={ rowContainerStyles }>
 						{ icon && (
 							<View style={ styles.cellRowContainer }>
 								<Dashicon icon={ icon } size={ 24 } color={ iconStyle.color } />

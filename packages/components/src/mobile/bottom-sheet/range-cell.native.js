@@ -1,11 +1,12 @@
 /**
  * External dependencies
  */
-import { Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 
 /**
  * Internal dependencies
  */
+import styles from './rangeCellStyles.scss';
 import Cell from './cell';
 import Slider from '../slider';
 
@@ -27,20 +28,24 @@ export default function BottomSheetRangeCell( props ) {
 	return (
 		<Cell
 			editable={ false }
+			cellContainerStyle={ styles.cellContainerStyles }
+			cellRowContainerStyle={ styles.cellRowStyles }
 			{ ...cellProps }
 		>
-			<Slider
-				value={ value }
-				defaultValue={ defaultValue }
-				disabled={ disabled }
-				step={ step }
-				minimumValue={ minimumValue }
-				maximumValue={ maximumValue }
-				minimumTrackTintColor={ minimumTrackTintColor }
-				maximumTrackTintColor={ maximumTrackTintColor }
-				thumbTintColor={ thumbTintColor }
-				onChangeValue={ onChangeValue }
-			/>
+			<View style={ styles.container } >
+				<Slider
+					value={ value }
+					defaultValue={ defaultValue }
+					disabled={ disabled }
+					step={ step }
+					minimumValue={ minimumValue }
+					maximumValue={ maximumValue }
+					minimumTrackTintColor={ minimumTrackTintColor }
+					maximumTrackTintColor={ maximumTrackTintColor }
+					thumbTintColor={ thumbTintColor }
+					onChangeValue={ onChangeValue }
+				/>
+			</View>
 		</Cell>
 	);
 }
