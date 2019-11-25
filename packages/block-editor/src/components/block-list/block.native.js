@@ -65,6 +65,7 @@ class BlockListBlock extends Component {
 				mergeBlocks={ this.props.mergeBlocks }
 				onCaretVerticalPositionChange={ this.props.onCaretVerticalPositionChange }
 				clientId={ this.props.clientId }
+				isEmptyGroup={ this.props.isEmptyGroup }
 			/>
 		);
 	}
@@ -108,6 +109,8 @@ class BlockListBlock extends Component {
 			getStylesFromColorScheme,
 			isSmallScreen,
 			selectionIsNested,
+			isGroupType,
+			isEmptyGroup,
 		} = this.props;
 
 		const fullSolidBorderStyle = {
@@ -119,12 +122,16 @@ class BlockListBlock extends Component {
 			return { ...styles.selectedParent,	...fullSolidBorderStyle	};
 		}
 
-		if ( isSmallScreen && ! selectionIsNested ) {
+		if ( isSmallScreen && ! selectionIsNested && ! isGroupType ) {
 			return {
 				...styles.selectedRootLeaf,
 				...styles.semiSolidBordered,
 				...{ borderColor: fullSolidBorderStyle.borderColor },
 			};
+		}
+
+		if ( isGroupType && isEmptyGroup ) {
+			return { ...styles.selectedLeaf,	...fullSolidBorderStyle, ... { paddingHorizontal: 1 }	};
 		}
 
 		return { ...styles.selectedLeaf,	...fullSolidBorderStyle	};
@@ -137,6 +144,7 @@ class BlockListBlock extends Component {
 			isAncestorSelected,
 			hasParent,
 			getStylesFromColorScheme,
+			isEmptyGroup,
 		} = this.props;
 
 		if ( ! hasParent ) {
@@ -150,8 +158,8 @@ class BlockListBlock extends Component {
 			};
 
 			return hasChildren ?
-				{ ...styles.childOfSelected, ...dashedBorderStyle } :
-				{ ...styles.childOfSelectedLeaf, ...dashedBorderStyle };
+				{ ...styles.childOfSelected, ...( ! isEmptyGroup ? dashedBorderStyle : { paddingLeft: 0, paddingRight: 0, marginHorizontal: 0 } ) } :
+				{ ...styles.childOfSelectedLeaf, ...( ! isEmptyGroup ? dashedBorderStyle : { paddingLeft: 0, paddingRight: 0, marginHorizontal: 0 } ) };
 		}
 
 		if ( isAncestorSelected ) {
@@ -273,6 +281,9 @@ export default compose( [
 		const isTouchable = isSelected || isDescendantSelected || selectedBlockClientId === parentId || parentId === '';
 		const isDimmed = ! isSelected && selectionIsNested && ! isAncestorSelected && ! isDescendantSelected && ( firstToSelectId === clientId || rootBlockId === clientId );
 
+		const isGroupType = name === 'core/group';
+		const isEmptyGroup = isGroupType && block.innerBlocks.length === 0;
+
 		return {
 			icon,
 			name: name || 'core/missing',
@@ -294,6 +305,8 @@ export default compose( [
 			isTouchable,
 			isDimmed,
 			selectionIsNested,
+			isGroupType,
+			isEmptyGroup,
 		};
 	} ),
 	withDispatch( ( dispatch, ownProps, { select } ) => {

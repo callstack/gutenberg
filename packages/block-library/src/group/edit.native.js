@@ -22,11 +22,13 @@ function GroupEdit( {
 	hasInnerBlocks,
 	isSelected,
 	getStylesFromColorScheme,
+	isEmptyGroup,
 } ) {
 	if ( ! isSelected && ! hasInnerBlocks ) {
 		return (
 			<View style={ [
 				getStylesFromColorScheme( styles.groupPlaceholder, styles.groupPlaceholderDark ),
+				isEmptyGroup && { marginTop: 0, marginBottom: 0 },
 			] } />
 		);
 	}
@@ -34,6 +36,7 @@ function GroupEdit( {
 	return (
 		<InnerBlocks
 			renderAppender={ isSelected && InnerBlocks.ButtonBlockAppender }
+			isEmptyGroup={ isEmptyGroup }
 		/>
 	);
 }

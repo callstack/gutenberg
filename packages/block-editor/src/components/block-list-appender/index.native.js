@@ -21,6 +21,7 @@ function BlockListAppender( {
 	canInsertDefaultBlock,
 	isLocked,
 	renderAppender: CustomAppender,
+	isEmptyGroup,
 } ) {
 	if ( isLocked ) {
 		return null;
@@ -39,6 +40,7 @@ function BlockListAppender( {
 				lastBlockClientId={ last( blockClientIds ) }
 				containerStyle={ styles.blockListAppender }
 				placeholder={ blockClientIds.length > 0 ? '' : null }
+				isEmptyGroup={ isEmptyGroup }
 			/>
 		);
 	}

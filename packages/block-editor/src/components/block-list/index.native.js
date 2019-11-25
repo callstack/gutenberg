@@ -96,11 +96,20 @@ export class BlockList extends Component {
 					ListFooterComponent={ withFooter && this.renderBlockListFooter }
 				/>
 
-				{ renderAppender && blockClientIds.length > 0 &&
-					<BlockListAppender
-						rootClientId={ this.props.rootClientId }
-						renderAppender={ this.props.renderAppender }
-					/>
+				{ renderAppender && blockClientIds.length > 0 && (
+					this.props.isEmptyGroup === false ? (
+						<View style={ { paddingHorizontal: 12 } }>
+							<BlockListAppender
+								rootClientId={ this.props.rootClientId }
+								renderAppender={ this.props.renderAppender }
+							/>
+						</View>
+					)						:
+						(	<BlockListAppender
+							rootClientId={ this.props.rootClientId }
+							renderAppender={ this.props.renderAppender }
+						/> )
+				)
 				}
 			</View>
 		);

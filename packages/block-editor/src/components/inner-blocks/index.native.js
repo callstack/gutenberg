@@ -108,6 +108,7 @@ class InnerBlocks extends Component {
 			renderAppender,
 			template,
 			__experimentalTemplateOptions: templateOptions,
+			isEmptyGroup,
 		} = this.props;
 		const { templateInProcess } = this.state;
 
@@ -123,6 +124,7 @@ class InnerBlocks extends Component {
 							renderAppender={ renderAppender }
 							withFooter={ false }
 							isFullyBordered={ true }
+							isEmptyGroup={ isEmptyGroup }
 						/>
 				) }
 			</>
