@@ -65,7 +65,6 @@ class BlockListBlock extends Component {
 				mergeBlocks={ this.props.mergeBlocks }
 				onCaretVerticalPositionChange={ this.props.onCaretVerticalPositionChange }
 				clientId={ this.props.clientId }
-				isEmptyGroup={ this.props.isEmptyGroup }
 			/>
 		);
 	}
