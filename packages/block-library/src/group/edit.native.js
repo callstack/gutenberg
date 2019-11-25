@@ -28,7 +28,7 @@ function GroupEdit( {
 		return (
 			<View style={ [
 				getStylesFromColorScheme( styles.groupPlaceholder, styles.groupPlaceholderDark ),
-				isEmptyGroup && { marginTop: 0, marginBottom: 0 },
+				isEmptyGroup && { marginTop: 5, marginBottom: 5 },
 			] } />
 		);
 	}

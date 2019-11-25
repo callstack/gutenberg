@@ -145,6 +145,7 @@ class BlockListBlock extends Component {
 			hasParent,
 			getStylesFromColorScheme,
 			isEmptyGroup,
+			isGroupType,
 		} = this.props;
 
 		if ( ! hasParent ) {
@@ -163,7 +164,10 @@ class BlockListBlock extends Component {
 		}
 
 		if ( isAncestorSelected ) {
-			return styles.descendantOfSelectedLeaf;
+			return {
+				...styles.descendantOfSelectedLeaf,
+				...( isGroupType && ! isEmptyGroup && { marginLeft: 0, marginRight: 0 } ),
+			};
 		}
 
 		return hasChildren ? styles.neutral : styles.full;
